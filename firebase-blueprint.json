@@ -1,0 +1,384 @@
+{
+  "entities": {
+    "PortfolioItem": {
+      "title": "PortfolioItem",
+      "description": "Curated advertising campaign and creative production showcase item managed via CMS.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "client": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "category": {
+          "type": "string",
+          "enum": [
+            "OOH & Billboard",
+            "Kampanye Digital",
+            "Branding & Identitas",
+            "Produksi Video"
+          ]
+        },
+        "metricLabel": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "summary": { "type": "string", "minLength": 10, "maxLength": 320 },
+        "challenge": { "type": "string", "minLength": 10, "maxLength": 600 },
+        "solution": { "type": "string", "minLength": 10, "maxLength": 600 },
+        "imageUrl": { "type": "string", "minLength": 5, "maxLength": 300 },
+        "location": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "year": { "type": "string", "minLength": 4, "maxLength": 10 },
+        "featured": { "type": "boolean" },
+        "published": { "type": "boolean" },
+        "sortOrder": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "title",
+        "client",
+        "category",
+        "metricLabel",
+        "summary",
+        "challenge",
+        "solution",
+        "imageUrl",
+        "location",
+        "year",
+        "featured",
+        "published",
+        "sortOrder",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Verified client testimonial with attributable role, company, and measurable outcome.",
+      "type": "object",
+      "properties": {
+        "clientName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "role": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "company": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "city": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "quote": { "type": "string", "minLength": 10, "maxLength": 500 },
+        "outcome": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "published": { "type": "boolean" },
+        "sortOrder": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "clientName",
+        "role",
+        "company",
+        "city",
+        "quote",
+        "outcome",
+        "published",
+        "sortOrder",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "HostingPartner": {
+      "title": "HostingPartner",
+      "description": "Strategic hosting and cloud infrastructure partner tier managed via CMS.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "Edge CDN",
+            "Cloud Managed",
+            "Dedicated Media",
+            "Enterprise Security"
+          ]
+        },
+        "region": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "uptimeSla": { "type": "string", "minLength": 2, "maxLength": 20 },
+        "description": { "type": "string", "minLength": 10, "maxLength": 300 },
+        "features": { "type": "array" },
+        "published": { "type": "boolean" },
+        "sortOrder": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "name",
+        "tier",
+        "region",
+        "uptimeSla",
+        "description",
+        "features",
+        "published",
+        "sortOrder",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "LeadInquiry": {
+      "title": "LeadInquiry",
+      "description": "Client consultation lead captured from kotobatuah.com homepage or AI assistant.",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "company": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "email": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 120,
+          "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+        },
+        "whatsapp": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 25,
+          "pattern": "^[0-9+\\-\\s()]+$"
+        },
+        "serviceType": {
+          "type": "string",
+          "enum": [
+            "OOH & Billboard",
+            "Kampanye Digital",
+            "Branding & Identitas",
+            "Produksi Video",
+            "Partner Hosting & CMS"
+          ]
+        },
+        "budgetRange": {
+          "type": "string",
+          "enum": [
+            "< Rp 25 Juta",
+            "Rp 25 - 75 Juta",
+            "Rp 75 - 200 Juta",
+            "> Rp 200 Juta"
+          ]
+        },
+        "city": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "brief": { "type": "string", "minLength": 10, "maxLength": 1000 },
+        "status": {
+          "type": "string",
+          "enum": ["baru", "dihubungi", "proposal", "selesai"]
+        },
+        "source": {
+          "type": "string",
+          "enum": ["homepage_form", "chatbot_handoff", "portfolio_cta"]
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "fullName",
+        "company",
+        "email",
+        "whatsapp",
+        "serviceType",
+        "budgetRange",
+        "city",
+        "brief",
+        "status",
+        "source",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized CMS administrator profile.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "minLength": 5, "maxLength": 120 },
+        "role": { "type": "string", "enum": ["admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Self-managed operational base, studio addresses, disclaimer, AdSense IDs, and contact info for kotobatuah.com.",
+      "type": "object",
+      "properties": {
+        "primaryHubName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "primaryAddress": { "type": "string", "minLength": 5, "maxLength": 200 },
+        "secondaryAddress": { "type": "string", "minLength": 5, "maxLength": 200 },
+        "contactEmail": { "type": "string", "minLength": 5, "maxLength": 120 },
+        "contactPhone": { "type": "string", "minLength": 6, "maxLength": 30 },
+        "taglineId": { "type": "string", "minLength": 5, "maxLength": 120 },
+        "taglineEn": { "type": "string", "minLength": 5, "maxLength": 120 },
+        "managementDisclaimerId": { "type": "string", "minLength": 0, "maxLength": 300 },
+        "managementDisclaimerEn": { "type": "string", "minLength": 0, "maxLength": 300 },
+        "adsenseClientId": { "type": "string", "minLength": 0, "maxLength": 40 },
+        "adsenseBlogSlotId": { "type": "string", "minLength": 0, "maxLength": 40 },
+        "adsenseArticleSlotId": { "type": "string", "minLength": 0, "maxLength": 40 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "primaryHubName",
+        "primaryAddress",
+        "secondaryAddress",
+        "contactEmail",
+        "contactPhone",
+        "taglineId",
+        "taglineEn",
+        "updatedAt"
+      ]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "description": "Bilingual SEO + GEO blog article synced from Google Sheets or edited via CMS.",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "minLength": 3, "maxLength": 100, "pattern": "^[a-z0-9-]+$" },
+        "titleId": { "type": "string", "minLength": 3, "maxLength": 140 },
+        "titleEn": { "type": "string", "minLength": 3, "maxLength": 140 },
+        "excerptId": { "type": "string", "minLength": 10, "maxLength": 360 },
+        "excerptEn": { "type": "string", "minLength": 10, "maxLength": 360 },
+        "contentId": { "type": "string", "minLength": 20, "maxLength": 8000 },
+        "contentEn": { "type": "string", "minLength": 20, "maxLength": 8000 },
+        "category": {
+          "type": "string",
+          "enum": ["Strategi OOH", "SEO & GEO", "Performance Ads", "Partner Hosting"]
+        },
+        "author": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "coverImageUrl": { "type": "string", "minLength": 5, "maxLength": 400 },
+        "tags": { "type": "array" },
+        "seoTitle": { "type": "string", "minLength": 3, "maxLength": 140 },
+        "seoDescription": { "type": "string", "minLength": 10, "maxLength": 320 },
+        "geoCity": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "readMinutes": { "type": "number" },
+        "featured": { "type": "boolean" },
+        "published": { "type": "boolean" },
+        "publishedAt": { "type": "string", "minLength": 4, "maxLength": 30 },
+        "source": { "type": "string", "enum": ["google_sheets", "cms"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "slug",
+        "titleId",
+        "titleEn",
+        "excerptId",
+        "excerptEn",
+        "contentId",
+        "contentEn",
+        "category",
+        "author",
+        "coverImageUrl",
+        "tags",
+        "seoTitle",
+        "seoDescription",
+        "geoCity",
+        "readMinutes",
+        "featured",
+        "published",
+        "publishedAt",
+        "source",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ProcedurePage": {
+      "title": "ProcedurePage",
+      "description": "Governance and legal procedure pages routed under /procedure/* synced via Google Sheets or CMS.",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "enum": ["disclaimers", "tos", "privacy-policy", "cookies"]
+        },
+        "titleId": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "titleEn": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "summaryId": { "type": "string", "minLength": 10, "maxLength": 360 },
+        "summaryEn": { "type": "string", "minLength": 10, "maxLength": 360 },
+        "contentId": { "type": "string", "minLength": 20, "maxLength": 8000 },
+        "contentEn": { "type": "string", "minLength": 20, "maxLength": 8000 },
+        "effectiveDate": { "type": "string", "minLength": 4, "maxLength": 30 },
+        "published": { "type": "boolean" },
+        "source": { "type": "string", "enum": ["google_sheets", "cms"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "slug",
+        "titleId",
+        "titleEn",
+        "summaryId",
+        "summaryEn",
+        "contentId",
+        "contentEn",
+        "effectiveDate",
+        "published",
+        "source",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SheetsConfig": {
+      "title": "SheetsConfig",
+      "description": "Connected Google Sheets spreadsheet ID and comprehensive tab mapping for blog, procedure pages, and site config.",
+      "type": "object",
+      "properties": {
+        "spreadsheetId": { "type": "string", "minLength": 10, "maxLength": 120 },
+        "spreadsheetTitle": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "spreadsheetUrl": { "type": "string", "minLength": 10, "maxLength": 300 },
+        "postsTab": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "categoriesTab": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "configTab": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "seoTab": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "procedureTab": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "autoSyncEnabled": { "type": "boolean" },
+        "lastSyncedAt": { "type": "string", "minLength": 0, "maxLength": 40 },
+        "lastSyncedCount": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "spreadsheetId",
+        "spreadsheetTitle",
+        "spreadsheetUrl",
+        "postsTab",
+        "categoriesTab",
+        "configTab",
+        "seoTab",
+        "autoSyncEnabled",
+        "lastSyncedAt",
+        "lastSyncedCount",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/portfolio/{itemId}": {
+      "schema": { "$ref": "#/entities/PortfolioItem" },
+      "description": "Advertising portfolio showcase items managed via CMS."
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": { "$ref": "#/entities/Testimonial" },
+      "description": "Verified client testimonials managed via CMS."
+    },
+    "/hostingPartners/{partnerId}": {
+      "schema": { "$ref": "#/entities/HostingPartner" },
+      "description": "Partner hosting & digital infrastructure tiers managed via CMS."
+    },
+    "/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/LeadInquiry" },
+      "description": "Private consultation lead submissions (PII isolated to admin)."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Authorized CMS administrators."
+    },
+    "/siteSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Publicly readable operational base, disclaimer, AdSense config, and contact settings managed by admin."
+    },
+    "/blogPosts/{postId}": {
+      "schema": { "$ref": "#/entities/BlogPost" },
+      "description": "Published blog articles managed via Google Sheets sync and CMS."
+    },
+    "/procedurePages/{pageId}": {
+      "schema": { "$ref": "#/entities/ProcedurePage" },
+      "description": "Legal and governance procedure pages served at /procedure/*."
+    },
+    "/sheetsConfig/{configId}": {
+      "schema": { "$ref": "#/entities/SheetsConfig" },
+      "description": "Admin-only Google Sheets source configuration and tab mappings."
+    }
+  }
+}

@@ -1,0 +1,401 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global safety net: default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Primitive Helpers ---
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isBootstrappedAdmin() {
+      return isVerifiedUser() && request.auth.token.email == 'yames.isa@gmail.com';
+    }
+
+    function isAdmin() {
+      return isBootstrappedAdmin() || (
+        isVerifiedUser() && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // --- Validation Blueprints ---
+    function isValidPortfolioItem(data) {
+      return data.keys().hasAll([
+        'title', 'client', 'category', 'metricLabel', 'summary',
+        'challenge', 'solution', 'imageUrl', 'location', 'year',
+        'featured', 'published', 'sortOrder', 'createdAt', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'title', 'client', 'category', 'metricLabel', 'summary',
+        'challenge', 'solution', 'imageUrl', 'location', 'year',
+        'featured', 'published', 'sortOrder', 'createdAt', 'updatedAt'
+      ]) &&
+      data.title is string && data.title.size() >= 3 && data.title.size() <= 120 &&
+      data.client is string && data.client.size() >= 2 && data.client.size() <= 80 &&
+      data.category in ['OOH & Billboard', 'Kampanye Digital', 'Branding & Identitas', 'Produksi Video'] &&
+      data.metricLabel is string && data.metricLabel.size() >= 2 && data.metricLabel.size() <= 80 &&
+      data.summary is string && data.summary.size() >= 10 && data.summary.size() <= 320 &&
+      data.challenge is string && data.challenge.size() >= 10 && data.challenge.size() <= 600 &&
+      data.solution is string && data.solution.size() >= 10 && data.solution.size() <= 600 &&
+      data.imageUrl is string && data.imageUrl.size() >= 5 && data.imageUrl.size() <= 300 &&
+      data.location is string && data.location.size() >= 2 && data.location.size() <= 80 &&
+      data.year is string && data.year.size() >= 4 && data.year.size() <= 10 &&
+      data.featured is bool &&
+      data.published is bool &&
+      data.sortOrder is number &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidTestimonial(data) {
+      return data.keys().hasAll([
+        'clientName', 'role', 'company', 'city', 'quote',
+        'outcome', 'published', 'sortOrder', 'createdAt', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'clientName', 'role', 'company', 'city', 'quote',
+        'outcome', 'published', 'sortOrder', 'createdAt', 'updatedAt'
+      ]) &&
+      data.clientName is string && data.clientName.size() >= 2 && data.clientName.size() <= 80 &&
+      data.role is string && data.role.size() >= 2 && data.role.size() <= 80 &&
+      data.company is string && data.company.size() >= 2 && data.company.size() <= 80 &&
+      data.city is string && data.city.size() >= 2 && data.city.size() <= 60 &&
+      data.quote is string && data.quote.size() >= 10 && data.quote.size() <= 500 &&
+      data.outcome is string && data.outcome.size() >= 3 && data.outcome.size() <= 120 &&
+      data.published is bool &&
+      data.sortOrder is number &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidHostingPartner(data) {
+      return data.keys().hasAll([
+        'name', 'tier', 'region', 'uptimeSla', 'description',
+        'features', 'published', 'sortOrder', 'createdAt', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'name', 'tier', 'region', 'uptimeSla', 'description',
+        'features', 'published', 'sortOrder', 'createdAt', 'updatedAt'
+      ]) &&
+      data.name is string && data.name.size() >= 2 && data.name.size() <= 80 &&
+      data.tier in ['Edge CDN', 'Cloud Managed', 'Dedicated Media', 'Enterprise Security'] &&
+      data.region is string && data.region.size() >= 2 && data.region.size() <= 60 &&
+      data.uptimeSla is string && data.uptimeSla.size() >= 2 && data.uptimeSla.size() <= 20 &&
+      data.description is string && data.description.size() >= 10 && data.description.size() <= 300 &&
+      data.features is list && data.features.size() >= 1 && data.features.size() <= 6 &&
+      data.features[0] is string && data.features[0].size() >= 2 && data.features[0].size() <= 100 &&
+      data.published is bool &&
+      data.sortOrder is number &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidLeadInquiry(data) {
+      return data.keys().hasAll([
+        'fullName', 'company', 'email', 'whatsapp', 'serviceType',
+        'budgetRange', 'city', 'brief', 'status', 'source',
+        'createdAt', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'fullName', 'company', 'email', 'whatsapp', 'serviceType',
+        'budgetRange', 'city', 'brief', 'status', 'source',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.fullName is string && data.fullName.size() >= 2 && data.fullName.size() <= 100 &&
+      data.company is string && data.company.size() >= 2 && data.company.size() <= 100 &&
+      data.email is string && data.email.size() >= 5 && data.email.size() <= 120 &&
+      data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$') &&
+      data.whatsapp is string && data.whatsapp.size() >= 8 && data.whatsapp.size() <= 25 &&
+      data.whatsapp.matches('^[0-9+\\-\\s()]+$') &&
+      data.serviceType in ['OOH & Billboard', 'Kampanye Digital', 'Branding & Identitas', 'Produksi Video', 'Partner Hosting & CMS'] &&
+      data.budgetRange in ['< Rp 25 Juta', 'Rp 25 - 75 Juta', 'Rp 75 - 200 Juta', '> Rp 200 Juta'] &&
+      data.city is string && data.city.size() >= 2 && data.city.size() <= 80 &&
+      data.brief is string && data.brief.size() >= 10 && data.brief.size() <= 1000 &&
+      data.status in ['baru', 'dihubungi', 'proposal', 'selesai'] &&
+      data.source in ['homepage_form', 'chatbot_handoff', 'portfolio_cta'] &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidSiteSettings(data) {
+      return data.keys().hasAll([
+        'primaryHubName', 'primaryAddress', 'secondaryAddress',
+        'contactEmail', 'contactPhone', 'taglineId', 'taglineEn', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'primaryHubName', 'primaryAddress', 'secondaryAddress',
+        'contactEmail', 'contactPhone', 'taglineId', 'taglineEn',
+        'managementDisclaimerId', 'managementDisclaimerEn',
+        'adsenseClientId', 'adsenseBlogSlotId', 'adsenseArticleSlotId', 'updatedAt'
+      ]) &&
+      data.primaryHubName is string && data.primaryHubName.size() >= 2 && data.primaryHubName.size() <= 80 &&
+      data.primaryAddress is string && data.primaryAddress.size() >= 5 && data.primaryAddress.size() <= 200 &&
+      data.secondaryAddress is string && data.secondaryAddress.size() >= 5 && data.secondaryAddress.size() <= 200 &&
+      data.contactEmail is string && data.contactEmail.size() >= 5 && data.contactEmail.size() <= 120 &&
+      data.contactPhone is string && data.contactPhone.size() >= 6 && data.contactPhone.size() <= 30 &&
+      data.taglineId is string && data.taglineId.size() >= 5 && data.taglineId.size() <= 120 &&
+      data.taglineEn is string && data.taglineEn.size() >= 5 && data.taglineEn.size() <= 120 &&
+      (!('managementDisclaimerId' in data) || (data.managementDisclaimerId is string && data.managementDisclaimerId.size() <= 300)) &&
+      (!('managementDisclaimerEn' in data) || (data.managementDisclaimerEn is string && data.managementDisclaimerEn.size() <= 300)) &&
+      (!('adsenseClientId' in data) || (data.adsenseClientId is string && data.adsenseClientId.size() <= 40)) &&
+      (!('adsenseBlogSlotId' in data) || (data.adsenseBlogSlotId is string && data.adsenseBlogSlotId.size() <= 40)) &&
+      (!('adsenseArticleSlotId' in data) || (data.adsenseArticleSlotId is string && data.adsenseArticleSlotId.size() <= 40)) &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidBlogPost(data) {
+      return data.keys().hasAll([
+        'slug', 'titleId', 'titleEn', 'excerptId', 'excerptEn', 'contentId',
+        'contentEn', 'category', 'author', 'coverImageUrl', 'tags',
+        'seoTitle', 'seoDescription', 'geoCity', 'readMinutes',
+        'featured', 'published', 'publishedAt', 'source', 'createdAt', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'slug', 'titleId', 'titleEn', 'excerptId', 'excerptEn', 'contentId',
+        'contentEn', 'category', 'author', 'coverImageUrl', 'tags',
+        'seoTitle', 'seoDescription', 'geoCity', 'readMinutes',
+        'featured', 'published', 'publishedAt', 'source', 'createdAt', 'updatedAt'
+      ]) &&
+      data.slug is string && data.slug.size() >= 3 && data.slug.size() <= 100 &&
+      data.slug.matches('^[a-z0-9-]+$') &&
+      data.titleId is string && data.titleId.size() >= 3 && data.titleId.size() <= 140 &&
+      data.titleEn is string && data.titleEn.size() >= 3 && data.titleEn.size() <= 140 &&
+      data.excerptId is string && data.excerptId.size() >= 10 && data.excerptId.size() <= 360 &&
+      data.excerptEn is string && data.excerptEn.size() >= 10 && data.excerptEn.size() <= 360 &&
+      data.contentId is string && data.contentId.size() >= 20 && data.contentId.size() <= 8000 &&
+      data.contentEn is string && data.contentEn.size() >= 20 && data.contentEn.size() <= 8000 &&
+      data.category in ['Strategi OOH', 'SEO & GEO', 'Performance Ads', 'Partner Hosting'] &&
+      data.author is string && data.author.size() >= 2 && data.author.size() <= 80 &&
+      data.coverImageUrl is string && data.coverImageUrl.size() >= 5 && data.coverImageUrl.size() <= 400 &&
+      data.tags is list && data.tags.size() >= 1 && data.tags.size() <= 6 &&
+      data.tags[0] is string && data.tags[0].size() >= 2 && data.tags[0].size() <= 40 &&
+      data.seoTitle is string && data.seoTitle.size() >= 3 && data.seoTitle.size() <= 140 &&
+      data.seoDescription is string && data.seoDescription.size() >= 10 && data.seoDescription.size() <= 320 &&
+      data.geoCity is string && data.geoCity.size() >= 2 && data.geoCity.size() <= 80 &&
+      data.readMinutes is number && data.readMinutes >= 1 && data.readMinutes <= 60 &&
+      data.featured is bool &&
+      data.published is bool &&
+      data.publishedAt is string && data.publishedAt.size() >= 4 && data.publishedAt.size() <= 30 &&
+      data.source in ['google_sheets', 'cms'] &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidProcedurePage(data) {
+      return data.keys().hasAll([
+        'slug', 'titleId', 'titleEn', 'summaryId', 'summaryEn',
+        'contentId', 'contentEn', 'effectiveDate', 'published', 'source',
+        'createdAt', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'slug', 'titleId', 'titleEn', 'summaryId', 'summaryEn',
+        'contentId', 'contentEn', 'effectiveDate', 'published', 'source',
+        'createdAt', 'updatedAt'
+      ]) &&
+      data.slug in ['disclaimers', 'tos', 'privacy-policy', 'cookies'] &&
+      data.titleId is string && data.titleId.size() >= 3 && data.titleId.size() <= 120 &&
+      data.titleEn is string && data.titleEn.size() >= 3 && data.titleEn.size() <= 120 &&
+      data.summaryId is string && data.summaryId.size() >= 10 && data.summaryId.size() <= 360 &&
+      data.summaryEn is string && data.summaryEn.size() >= 10 && data.summaryEn.size() <= 360 &&
+      data.contentId is string && data.contentId.size() >= 20 && data.contentId.size() <= 8000 &&
+      data.contentEn is string && data.contentEn.size() >= 20 && data.contentEn.size() <= 8000 &&
+      data.effectiveDate is string && data.effectiveDate.size() >= 4 && data.effectiveDate.size() <= 30 &&
+      data.published is bool &&
+      data.source in ['google_sheets', 'cms'] &&
+      data.createdAt is timestamp &&
+      data.updatedAt is timestamp;
+    }
+
+    function isValidSheetsConfig(data) {
+      return data.keys().hasAll([
+        'spreadsheetId', 'spreadsheetTitle', 'spreadsheetUrl',
+        'postsTab', 'categoriesTab', 'configTab', 'seoTab',
+        'autoSyncEnabled', 'lastSyncedAt', 'lastSyncedCount', 'updatedAt'
+      ]) && data.keys().hasOnly([
+        'spreadsheetId', 'spreadsheetTitle', 'spreadsheetUrl',
+        'postsTab', 'categoriesTab', 'configTab', 'seoTab', 'procedureTab',
+        'autoSyncEnabled', 'lastSyncedAt', 'lastSyncedCount', 'updatedAt'
+      ]) &&
+      data.spreadsheetId is string && data.spreadsheetId.size() >= 10 && data.spreadsheetId.size() <= 120 &&
+      data.spreadsheetTitle is string && data.spreadsheetTitle.size() >= 2 && data.spreadsheetTitle.size() <= 120 &&
+      data.spreadsheetUrl is string && data.spreadsheetUrl.size() >= 10 && data.spreadsheetUrl.size() <= 300 &&
+      data.postsTab is string && data.postsTab.size() >= 1 && data.postsTab.size() <= 80 &&
+      data.categoriesTab is string && data.categoriesTab.size() >= 1 && data.categoriesTab.size() <= 80 &&
+      data.configTab is string && data.configTab.size() >= 1 && data.configTab.size() <= 80 &&
+      data.seoTab is string && data.seoTab.size() >= 1 && data.seoTab.size() <= 80 &&
+      (!('procedureTab' in data) || (data.procedureTab is string && data.procedureTab.size() >= 1 && data.procedureTab.size() <= 80)) &&
+      data.autoSyncEnabled is bool &&
+      data.lastSyncedAt is string && data.lastSyncedAt.size() <= 40 &&
+      data.lastSyncedCount is number && data.lastSyncedCount >= 0 &&
+      data.updatedAt is timestamp;
+    }
+
+    // --- Collection Rules ---
+
+    // Connection probe for startup SDK check
+    match /test/connection {
+      allow get: if true;
+    }
+
+    // Portfolio CMS items: public reads only published items; admins manage all
+    match /portfolio/{itemId} {
+      allow get: if isValidId(itemId) && (existing().published == true || isAdmin());
+      allow list: if existing().published == true || isBootstrappedAdmin();
+      allow create: if isValidId(itemId) && isAdmin() &&
+        isValidPortfolioItem(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(itemId) && isAdmin() &&
+        isValidPortfolioItem(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'title', 'client', 'category', 'metricLabel', 'summary',
+          'challenge', 'solution', 'imageUrl', 'location', 'year',
+          'featured', 'published', 'sortOrder', 'updatedAt'
+        ]);
+      allow delete: if isValidId(itemId) && isAdmin();
+    }
+
+    // Client testimonials: public reads only published items; admins manage all
+    match /testimonials/{testimonialId} {
+      allow get: if isValidId(testimonialId) && (existing().published == true || isAdmin());
+      allow list: if existing().published == true || isBootstrappedAdmin();
+      allow create: if isValidId(testimonialId) && isAdmin() &&
+        isValidTestimonial(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(testimonialId) && isAdmin() &&
+        isValidTestimonial(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'clientName', 'role', 'company', 'city', 'quote',
+          'outcome', 'published', 'sortOrder', 'updatedAt'
+        ]);
+      allow delete: if isValidId(testimonialId) && isAdmin();
+    }
+
+    // Partner Hosting tiers: public reads only published items; admins manage all
+    match /hostingPartners/{partnerId} {
+      allow get: if isValidId(partnerId) && (existing().published == true || isAdmin());
+      allow list: if existing().published == true || isBootstrappedAdmin();
+      allow create: if isValidId(partnerId) && isAdmin() &&
+        isValidHostingPartner(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(partnerId) && isAdmin() &&
+        isValidHostingPartner(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'name', 'tier', 'region', 'uptimeSla', 'description',
+          'features', 'published', 'sortOrder', 'updatedAt'
+        ]);
+      allow delete: if isValidId(partnerId) && isAdmin();
+    }
+
+    // Leads: public visitors can submit a new lead (status 'baru'); PII reads/updates strictly admin-only
+    match /leads/{leadId} {
+      allow get: if isValidId(leadId) && isAdmin();
+      allow list: if isBootstrappedAdmin();
+      allow create: if isValidId(leadId) &&
+        isValidLeadInquiry(incoming()) &&
+        incoming().status == 'baru' &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(leadId) && isAdmin() &&
+        isValidLeadInquiry(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']);
+      allow delete: if isValidId(leadId) && isAdmin();
+    }
+
+    // Admins registry: read by self or bootstrapped admin; write strictly bootstrapped admin
+    match /admins/{adminId} {
+      allow get: if isValidId(adminId) && (isBootstrappedAdmin() || (isVerifiedUser() && request.auth.uid == adminId));
+      allow list: if isBootstrappedAdmin();
+      allow create: if isValidId(adminId) && isBootstrappedAdmin() &&
+        incoming().keys().hasAll(['email', 'role', 'createdAt']) &&
+        incoming().keys().hasOnly(['email', 'role', 'createdAt']) &&
+        incoming().email is string && incoming().email.size() >= 5 && incoming().email.size() <= 120 &&
+        incoming().role == 'admin' &&
+        incoming().createdAt == request.time;
+      allow update, delete: if isValidId(adminId) && isBootstrappedAdmin();
+    }
+
+    // Public site settings (operational base, studio addresses, contact info); writes strictly admin-only
+    match /siteSettings/{settingId} {
+      allow get: if isValidId(settingId);
+      allow create, update: if isValidId(settingId) && isAdmin() &&
+        isValidSiteSettings(incoming()) &&
+        incoming().updatedAt == request.time;
+      allow delete: if isValidId(settingId) && isAdmin();
+    }
+
+    // Blog posts synced from Google Sheets or edited via CMS: public reads published only; admins manage all
+    match /blogPosts/{postId} {
+      allow get: if isValidId(postId) && (existing().published == true || isAdmin());
+      allow list: if existing().published == true || isBootstrappedAdmin();
+      allow create: if isValidId(postId) && isAdmin() &&
+        isValidBlogPost(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(postId) && isAdmin() &&
+        isValidBlogPost(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'slug', 'titleId', 'titleEn', 'excerptId', 'excerptEn', 'contentId',
+          'contentEn', 'category', 'author', 'coverImageUrl', 'tags',
+          'seoTitle', 'seoDescription', 'geoCity', 'readMinutes',
+          'featured', 'published', 'publishedAt', 'source', 'updatedAt'
+        ]);
+      allow delete: if isValidId(postId) && isAdmin();
+    }
+
+    // Procedure & legal pages (/procedure/*): public reads published only; admins manage all
+    match /procedurePages/{pageId} {
+      allow get: if isValidId(pageId) && (existing().published == true || isAdmin());
+      allow list: if existing().published == true || isBootstrappedAdmin();
+      allow create: if isValidId(pageId) && isAdmin() &&
+        isValidProcedurePage(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(pageId) && isAdmin() &&
+        isValidProcedurePage(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'slug', 'titleId', 'titleEn', 'summaryId', 'summaryEn',
+          'contentId', 'contentEn', 'effectiveDate', 'published', 'source', 'updatedAt'
+        ]);
+      allow delete: if isValidId(pageId) && isAdmin();
+    }
+
+    // Admin-only Google Sheets integration config and tab mappings
+    match /sheetsConfig/{configId} {
+      allow get: if isValidId(configId) && isAdmin();
+      allow list: if isBootstrappedAdmin();
+      allow create, update: if isValidId(configId) && isAdmin() &&
+        isValidSheetsConfig(incoming()) &&
+        incoming().updatedAt == request.time;
+      allow delete: if isValidId(configId) && isAdmin();
+    }
+  }
+}
