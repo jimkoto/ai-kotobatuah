@@ -35,31 +35,187 @@ export function translateBlogCategory(category: BlogCategory | 'Semua', lang: Lo
 export const COPY = {
   id: {
     nav: {
+      masalahSolusi: 'Masalah & Solusi',
+      paket: 'Paket 2027',
+      pendekatan: 'Pendekatan',
+      faq: 'FAQ',
+      blog: 'Blog',
+      konsultasi: 'Brief Proyek',
       portofolio: 'Portofolio',
       layanan: 'Layanan',
       hosting: 'Partner Hosting',
-      blog: 'Blog',
-      testimoni: 'Model Kerja',
+      testimoni: 'Pendekatan',
       seoGeo: 'SEO & GEO',
-      cta: 'Mulai Konsultasi',
+      cta: 'Chat WhatsApp',
       openMenu: 'Buka menu navigasi',
       closeMenu: 'Tutup menu navigasi',
     },
     hero: {
-      h1: 'Kampanye periklanan yang mengubah perhatian lokal menjadi leads terukur.',
+      badge: 'SIAP AKSELERASI DIGITAL 2027 • KOTO BATUAH',
+      h1: 'Bangun & Optimalkan Aset Digital Bisnis Anda Sebelum 2027 — Cepat, Ringan, dan Siap Menghasilkan.',
       subtitle:
-        'kotobatuah.com memadukan kekuatan media luar ruang (OOH), iklan digital, produksi visual berkarakter, optimisasi SEO + GEO lokal, serta CMS responsif di atas infrastruktur partner hosting berkecepatan tinggi.',
-      primaryCta: 'Mulai Konsultasi Gratis',
-      secondaryCta: 'Lihat Kapabilitas Proyek',
+        'Solusi pembuatan website bisnis, optimasi SEO & GEO, serta manajemen aset digital praktis untuk UMKM, profesional, properti, dan komunitas. Eksekusi terarah tanpa proses berbelit.',
+      primaryCta: 'Chat WhatsApp Sekarang',
+      primaryWaMessage:
+        'Halo Koto Batuah, saya ingin konsultasi persiapan aset digital untuk 2027. Boleh info alur dan slot terdekatnya?',
+      secondaryCta: 'Lihat Paket Siap 2027',
       studioLabel: 'Studio Berbasis Proyek · Jaringan Akomoda Network',
       studioCaption:
-        'Kolaborasi media OOH, akuisisi leads digital, dan hosting kampanye berbasis target proyek.',
-      metrics: [
-        { value: 'Project-Based', label: 'Tim spesialis terdedikasi per kampanye' },
-        { value: '99.99%', label: 'Target uptime infrastruktur partner hosting' },
-        { value: 'SEO + GEO', label: 'Optimisasi visibilitas Tangerang Raya & ID' },
-        { value: '< 1.2s', label: 'Target muat halaman CMS Edge CDN' },
+        'Eksekusi website kilat, optimasi SEO + GEO, dan manajemen aset digital siap menghasilkan menuju 2027.',
+      highlights: [
+        {
+          code: '01',
+          title: 'Akses cepat & arsitektur ringan',
+          caption: 'Struktur kode bersih untuk loading responsif di mobile & desktop.',
+        },
+        {
+          code: '02',
+          title: 'Terstruktur untuk pencarian web & AI (SEO + GEO)',
+          caption: 'Siap terbaca Google Search, Maps, dan ringkasan mesin pencari AI.',
+        },
+        {
+          code: '03',
+          title: 'Pendampingan langsung & transparan',
+          caption: 'Komunikasi praktis via WhatsApp dengan milestone eksekusi jelas.',
+        },
       ],
+    },
+    problems: {
+      kicker: 'Masalah & Solusi Cepat',
+      heading: 'Kenapa Banyak Bisnis Tertinggal Saat Pergantian Tahun?',
+      items: [
+        {
+          num: '01',
+          text: 'Website ada, tapi lambat, tampilannya usang, atau tidak mengarahkan pengunjung untuk menghubungi Anda.',
+        },
+        {
+          num: '02',
+          text: 'Promosi masih tersebar tanpa halaman utama yang jelas untuk meyakinkan calon klien atau pembeli.',
+        },
+        {
+          num: '03',
+          text: 'Persiapan konten dan kanal digital sering tertunda karena kesibukan operasional harian.',
+        },
+      ],
+      transition:
+        'Koto Batuah membantu merapikan fondasi digital Anda dengan cepat—fokus pada hal yang paling berdampak pada kredibilitas dan peluang transaksi.',
+      transitionCta: 'Lihat Paket Siap 2027',
+    },
+    packages2027: {
+      kicker: 'Tiga Paket Utama Cepat Menghasilkan',
+      heading: 'Pilih langkah tercepat untuk menyiapkan aset digital bisnis Anda sebelum 2027.',
+      subtitle:
+        'Setiap paket disusun ringkas agar Anda bisa langsung eksekusi tanpa birokrasi berbelit. Klik paket yang sesuai untuk langsung terhubung ke WhatsApp.',
+      items: [
+        {
+          id: 'paket-website-kilat',
+          code: 'Paket 1',
+          badge: 'Siap Mulai Cepat',
+          featured: true,
+          title: 'Website Bisnis Kilat 2027',
+          audience:
+            'Cocok untuk UMKM, jasa lokal, agen/tim properti, praktisi, dan komunitas yang butuh alamat resmi online cepat sebelum tahun baru.',
+          features: [
+            'Halaman profil / landing page responsif',
+            'Struktur value, layanan/produk, keunggulan, FAQ, dan tombol kontak langsung',
+            'Integrasi WhatsApp dengan pesan otomatis & pengaturan dasar SEO/GEO',
+          ],
+          estimateLabel: 'Estimasi',
+          estimate: 'Pengerjaan kilat 3–5 hari kerja (setelah materi/brief lengkap).',
+          ctaLabel: 'Pesan Paket Website Kilat',
+          waMessage:
+            'Halo Koto Batuah, saya tertarik dengan Paket Website Bisnis Kilat 2027 untuk usaha/proyek saya. Mohon info detail paket, estimasi waktu, dan DP-nya.',
+        },
+        {
+          id: 'paket-audit-optimasi',
+          code: 'Paket 2',
+          badge: 'SEO + GEO Ready',
+          featured: false,
+          title: 'Audit & Optimasi Web + SEO/GEO',
+          audience:
+            'Cocok untuk pemilik website yang ingin situsnya lebih cepat, rapi secara struktur, dan mudah dipahami mesin pencari maupun ringkasan AI.',
+          features: [
+            'Evaluasi kecepatan, struktur halaman, keterbacaan konten, dan jalur konversi (CTA)',
+            'Perapihan heading, ringkasan jawaban/FAQ, dan metadata agar lebih kuat di SEO & GEO',
+            'Rekomendasi prioritas perbaikan yang bisa langsung dieksekusi',
+          ],
+          estimateLabel: 'Estimasi',
+          estimate: '2–4 hari kerja.',
+          ctaLabel: 'Ajukan Audit & Optimasi',
+          waMessage:
+            'Halo Koto Batuah, saya ingin mengajukan Audit & Optimasi Web + SEO/GEO untuk situs saya. Boleh kirimkan info langkah awalnya?',
+        },
+        {
+          id: 'paket-retainer-bulanan',
+          code: 'Paket 3',
+          badge: 'Perawatan Rutin',
+          featured: false,
+          title: 'Retainer Perawatan & Konten Bulanan',
+          audience:
+            'Cocok untuk bisnis atau pengelola kanal yang ingin aset web, pembaruan informasi, dan konten rutin tetap jalan tanpa harus mengurus teknis sendiri.',
+          features: [
+            'Pembaruan halaman/promo/informasi berkala dan pengecekan kesehatan tautan/halaman',
+            'Penyusunan draf artikel/konten terarah berbasis sudut pandang bisnis & kebutuhan audiens',
+            'Prioritas respons pembaruan teknis sesuai kesepakatan paket',
+          ],
+          estimateLabel: 'Estimasi',
+          estimate: 'Skema bulanan / kontrak tahunan.',
+          ctaLabel: 'Diskusi Paket Retainer',
+          waMessage:
+            'Halo Koto Batuah, saya tertarik membahas Paket Retainer Perawatan & Konten Bulanan untuk kebutuhan rutin ke depan.',
+        },
+      ],
+    },
+    approach: {
+      kicker: 'Bukti & Pendekatan Kerja (E-E-A-T)',
+      heading: 'Pendekatan Praktis Berbasis Eksekusi Nyata',
+      pillars: [
+        {
+          num: '01 · FOKUS EKSEKUSI',
+          title: 'Fokus Hasil & Kecepatan',
+          body: 'Mengutamakan halaman yang jelas tujuannya, ringan diakses, dan mudah digunakan calon pelanggan.',
+          meta: 'Arsitektur Web Bersih & Cepat',
+        },
+        {
+          num: '02 · LINTAS SEKTOR',
+          title: 'Pengalaman Lintas Sektor',
+          body: 'Terbiasa menangani kebutuhan digital usaha lokal/UMKM, properti, komunitas, serta pengelolaan konten dan ekosistem web.',
+          meta: 'UMKM · Properti · Praktisi · Komunitas',
+        },
+        {
+          num: '03 · EKOSISTEM KOTO BATUAH',
+          title: 'Ekosistem Terarah',
+          body: 'Terhubung dengan kanal pendukung Koto Batuah (kotobatuah.web.id untuk catatan & publikasi, koto.biz.id untuk kemitraan/afiliasi) sesuai kebutuhan pengembangan jangka panjang.',
+          meta: 'kotobatuah.com · kotobatuah.web.id · koto.biz.id',
+        },
+      ],
+      verifiedReviewsHeading: 'Ulasan Mitra Terverifikasi',
+    },
+    faqClosing: {
+      kicker: 'FAQ Singkat',
+      heading: 'Pertanyaan Umum Sebelum Memulai Proyek 2027',
+      items: [
+        {
+          q: 'Berapa lama proses pengerjaannya?',
+          a: 'Untuk paket website kilat atau optimasi terfokus, estimasinya beberapa hari kerja setelah kebutuhan dan materi awal disepakati.',
+        },
+        {
+          q: 'Bagaimana alur mulai dan pembayarannya?',
+          a: 'Mulai dari diskusi singkat kebutuhan via WhatsApp, penentuan ruang lingkup & jadwal, pembayaran DP awal untuk memulai pengerjaan, lalu pelunasan saat serah terima sesuai kesepakatan.',
+        },
+        {
+          q: 'Apakah saya bisa mengupdate informasi setelah selesai?',
+          a: 'Bisa. Struktur halaman dibuat rapi dan mudah disesuaikan, dan Anda juga bisa mengambil paket perawatan jika ingin pembaruan rutin ditangani.',
+        },
+      ],
+      closingKicker: 'Langkah Berikutnya',
+      closingHeading: 'Siap memulai langkah digital bisnis Anda untuk 2027?',
+      closingBody:
+        'Slot pengerjaan akhir tahun dibatasi agar setiap proyek tetap terjaga kualitasnya.',
+      closingCta: 'Konsultasi & Amankan Slot via WhatsApp',
+      closingSecondaryCta: 'Kirim Brief Tertulis',
+      closingWaMessage:
+        'Halo Koto Batuah, saya ingin konsultasi persiapan aset digital untuk 2027 dan mengamankan slot pengerjaan terdekat.',
     },
     portfolio: {
       kicker: 'Kapabilitas & Showcase Proyek',
@@ -269,31 +425,187 @@ export const COPY = {
   },
   en: {
     nav: {
+      masalahSolusi: 'Challenges & Solution',
+      paket: '2027 Packages',
+      pendekatan: 'Approach',
+      faq: 'FAQ',
+      blog: 'Blog',
+      konsultasi: 'Project Brief',
       portofolio: 'Portfolio',
       layanan: 'Services',
       hosting: 'Partner Hosting',
-      blog: 'Blog',
-      testimoni: 'Work Model',
+      testimoni: 'Approach',
       seoGeo: 'SEO & GEO',
-      cta: 'Start Consultation',
+      cta: 'Chat on WhatsApp',
       openMenu: 'Open navigation menu',
       closeMenu: 'Close navigation menu',
     },
     hero: {
-      h1: 'Advertising campaigns engineered to turn local attention into measurable leads.',
+      badge: 'READY FOR 2027 DIGITAL ACCELERATION • KOTO BATUAH',
+      h1: 'Build & Optimize Your Business Digital Assets Before 2027 — Fast, Lightweight, and Ready to Convert.',
       subtitle:
-        'kotobatuah.com unifies outdoor OOH media, performance digital ads, commercial visual production, local SEO + GEO optimization, and a responsive CMS running on high-speed partner hosting.',
-      primaryCta: 'Book Free Consultation',
-      secondaryCta: 'Explore Capabilities',
+        'Practical business website creation, SEO & GEO optimization, and digital asset management tailored for SMEs, professionals, property teams, and communities. Focused execution without unnecessary delays.',
+      primaryCta: 'Chat WhatsApp Now',
+      primaryWaMessage:
+        'Hello Koto Batuah, I would like to consult on preparing digital assets for 2027. Could you share the workflow and nearest available slots?',
+      secondaryCta: 'View 2027-Ready Packages',
       studioLabel: 'Project-Based Studio · Akomoda Network',
       studioCaption:
-        'Flexible OOH media planning, digital lead acquisition, and campaign hosting built per project.',
-      metrics: [
-        { value: 'Project-Based', label: 'Dedicated specialist squad per campaign' },
-        { value: '99.99%', label: 'Partner hosting uptime target' },
-        { value: 'SEO + GEO', label: 'Greater Tangerang & Indonesia coverage' },
-        { value: '< 1.2s', label: 'Edge CDN CMS load speed target' },
+        'Rapid business website launches, SEO + GEO structuring, and conversion-focused digital asset execution for 2027.',
+      highlights: [
+        {
+          code: '01',
+          title: 'Fast access & lightweight architecture',
+          caption: 'Clean codebase built for rapid loading across mobile and desktop.',
+        },
+        {
+          code: '02',
+          title: 'Structured for web & AI search (SEO + GEO)',
+          caption: 'Clear headings, FAQ schema, and metadata ready for search engines and AI answers.',
+        },
+        {
+          code: '03',
+          title: 'Direct & transparent guidance',
+          caption: 'Streamlined WhatsApp coordination with clear delivery milestones.',
+        },
       ],
+    },
+    problems: {
+      kicker: 'Challenges & Fast Solution',
+      heading: 'Why Many Businesses Fall Behind at the Turn of the Year?',
+      items: [
+        {
+          num: '01',
+          text: 'You have a website, but it loads slowly, looks dated, or fails to guide visitors to contact you.',
+        },
+        {
+          num: '02',
+          text: 'Promotions stay scattered across channels without a clear primary page that persuades prospects or buyers.',
+        },
+        {
+          num: '03',
+          text: 'Content preparation and digital channel updates keep getting delayed by daily operational demands.',
+        },
+      ],
+      transition:
+        'Koto Batuah helps streamline your digital foundation quickly—focusing directly on what drives credibility and real transaction opportunities.',
+      transitionCta: 'View 2027-Ready Packages',
+    },
+    packages2027: {
+      kicker: 'Three Core Conversion Packages',
+      heading: 'Pick the fastest path to get your digital assets working before 2027.',
+      subtitle:
+        'Every package is structured for swift execution with direct WhatsApp coordination.',
+      items: [
+        {
+          id: 'paket-website-kilat',
+          code: 'Package 1',
+          badge: 'Fast-Track Launch',
+          featured: true,
+          title: 'Express Business Website 2027',
+          audience:
+            'Built for SMEs, local services, property agents/teams, practitioners, and communities needing an official online presence fast before the new year.',
+          features: [
+            'Responsive company profile or landing page',
+            'Clear value proposition, service/product blocks, strengths, FAQ, and direct contact buttons',
+            'Prefilled WhatsApp integration & foundational SEO/GEO setup',
+          ],
+          estimateLabel: 'Timeline',
+          estimate: 'Express delivery in 3–5 business days (once brief & materials are complete).',
+          ctaLabel: 'Order Express Website',
+          waMessage:
+            'Hello Koto Batuah, I am interested in the Express Business Website 2027 package for my business/project. Please share package details, timeline, and deposit steps.',
+        },
+        {
+          id: 'paket-audit-optimasi',
+          code: 'Package 2',
+          badge: 'SEO + GEO Ready',
+          featured: false,
+          title: 'Web Audit & SEO/GEO Optimization',
+          audience:
+            'Ideal for website owners seeking faster speed, cleaner structure, and stronger visibility across search engines and AI summaries.',
+          features: [
+            'Evaluation of page speed, layout structure, content readability, and CTA conversion paths',
+            'Heading cleanup, answer/FAQ summaries, and metadata tuning for SEO & GEO clarity',
+            'Prioritized action roadmap ready for immediate execution',
+          ],
+          estimateLabel: 'Timeline',
+          estimate: '2–4 business days.',
+          ctaLabel: 'Request Audit & Optimization',
+          waMessage:
+            'Hello Koto Batuah, I would like to request a Web Audit & SEO/GEO Optimization for my site. Could you share the initial steps?',
+        },
+        {
+          id: 'paket-retainer-bulanan',
+          code: 'Package 3',
+          badge: 'Ongoing Care',
+          featured: false,
+          title: 'Monthly Care & Content Retainer',
+          audience:
+            'Designed for businesses or channel managers wanting regular updates, content publishing, and site upkeep handled without technical hassle.',
+          features: [
+            'Scheduled page/promo/information updates and routine link/page health checks',
+            'Targeted article & content drafts aligned with business angles and audience questions',
+            'Priority technical update response based on agreed retainer scope',
+          ],
+          estimateLabel: 'Schedule',
+          estimate: 'Monthly retainer / annual agreement.',
+          ctaLabel: 'Discuss Retainer Plan',
+          waMessage:
+            'Hello Koto Batuah, I would like to discuss the Monthly Care & Content Retainer for ongoing website and content needs.',
+        },
+      ],
+    },
+    approach: {
+      kicker: 'Proof & Working Approach (E-E-A-T)',
+      heading: 'Practical Approach Built on Real Execution',
+      pillars: [
+        {
+          num: '01 · EXECUTION FOCUS',
+          title: 'Focused on Outcomes & Speed',
+          body: 'Prioritizing pages with a clear goal, fast mobile loading, and frictionless usability for prospective customers.',
+          meta: 'Clean & Lightweight Web Architecture',
+        },
+        {
+          num: '02 · CROSS-SECTOR EXPERIENCE',
+          title: 'Cross-Sector Field Experience',
+          body: 'Hands-on experience supporting local SMEs, property teams, communities, and ongoing web & content ecosystems.',
+          meta: 'SMEs · Property · Practitioners · Communities',
+        },
+        {
+          num: '03 · CONNECTED ECOSYSTEM',
+          title: 'Structured Ecosystem',
+          body: 'Connected to Koto Batuah supporting channels (kotobatuah.web.id for notes & publications, koto.biz.id for partnerships/affiliates) as your long-term needs grow.',
+          meta: 'kotobatuah.com · kotobatuah.web.id · koto.biz.id',
+        },
+      ],
+      verifiedReviewsHeading: 'Verified Partner Reviews',
+    },
+    faqClosing: {
+      kicker: 'Quick FAQ',
+      heading: 'Common Questions Before Starting Your 2027 Project',
+      items: [
+        {
+          q: 'How long does execution take?',
+          a: 'For express websites or focused optimization packages, turnaround is typically a few business days once requirements and initial materials are confirmed.',
+        },
+        {
+          q: 'How do onboarding and payments work?',
+          a: 'We start with a quick WhatsApp consultation, align on scope and schedule, confirm an initial deposit to begin work, and settle the balance upon handover as agreed.',
+        },
+        {
+          q: 'Can I update information after launch?',
+          a: 'Yes. The page structure is kept clean and easy to maintain, and you can also choose a monthly retainer if you prefer ongoing updates handled for you.',
+        },
+      ],
+      closingKicker: 'Next Step',
+      closingHeading: 'Ready to launch your digital momentum for 2027?',
+      closingBody:
+        'Year-end production slots are limited so every project receives dedicated quality control.',
+      closingCta: 'Consult & Reserve Slot via WhatsApp',
+      closingSecondaryCta: 'Send Written Project Brief',
+      closingWaMessage:
+        'Hello Koto Batuah, I would like to consult on my 2027 digital assets and reserve the nearest available slot.',
     },
     portfolio: {
       kicker: 'Capabilities & Project Showcase',

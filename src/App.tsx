@@ -2,15 +2,11 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import {
   DEFAULT_SITE_SETTINGS,
   SEED_BLOG_POSTS,
-  SEED_HOSTING_PARTNERS,
-  SEED_PORTFOLIO,
   SEED_PROCEDURE_PAGES,
   SEED_TESTIMONIALS,
 } from './data/seedData';
 import {
   subscribePublishedBlogPosts,
-  subscribePublishedHostingPartners,
-  subscribePublishedPortfolio,
   subscribePublishedProcedurePages,
   subscribePublishedTestimonials,
   subscribeSiteSettings,
@@ -18,11 +14,9 @@ import {
 import {
   PROCEDURE_SLUGS,
   type BlogPost,
-  type HostingPartnerItem,
   type LeadServiceType,
   type LeadSource,
   type Locale,
-  type PortfolioItem,
   type ProcedurePage,
   type ProcedureSlug,
   type SiteSettings,
@@ -31,10 +25,10 @@ import {
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { PortfolioSection } from './components/PortfolioSection';
-import { ServicesAndHostingSection } from './components/ServicesAndHostingSection';
-import { TestimonialsSection } from './components/TestimonialsSection';
-import { SeoGeoSection } from './components/SeoGeoSection';
+import { ProblemsAndSolutionsSection } from './components/ProblemsAndSolutionsSection';
+import { Packages2027Section } from './components/Packages2027Section';
+import { ApproachEeatSection } from './components/ApproachEeatSection';
+import { FaqClosingSection } from './components/FaqClosingSection';
 import { BlogSection } from './components/BlogSection';
 import { LeadCaptureSection } from './components/LeadCaptureSection';
 import { Footer } from './components/Footer';
@@ -64,12 +58,7 @@ function parseProcedureSlugFromPath(pathname: string): ProcedureSlug | null {
 function KotoBatuahApp() {
   const [lang, setLang] = useState<Locale>(getInitialLocale);
   const [siteSettings, setSiteSettings] = useState<SiteSettings>(DEFAULT_SITE_SETTINGS);
-  const [portfolio, setPortfolio] = useState<PortfolioItem[]>(SEED_PORTFOLIO);
-  const [portfolioLoading, setPortfolioLoading] = useState(true);
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>(SEED_TESTIMONIALS);
-  const [hostingPartners, setHostingPartners] = useState<HostingPartnerItem[]>(
-    SEED_HOSTING_PARTNERS
-  );
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(SEED_BLOG_POSTS);
   const [procedurePages, setProcedurePages] = useState<ProcedurePage[]>(SEED_PROCEDURE_PAGES);
   const [currentProcedureSlug, setCurrentProcedureSlug] = useState<ProcedureSlug | null>(() =>
@@ -109,25 +98,9 @@ function KotoBatuahApp() {
   }, []);
 
   useEffect(() => {
-    const unsubPortfolio = subscribePublishedPortfolio(
-      (items) => {
-        setPortfolio(items);
-        setPortfolioLoading(false);
-      },
-      () => {
-        setPortfolio(SEED_PORTFOLIO);
-        setPortfolioLoading(false);
-      }
-    );
-
     const unsubTestimonials = subscribePublishedTestimonials(
       (items) => setTestimonials(items),
       () => setTestimonials(SEED_TESTIMONIALS)
-    );
-
-    const unsubHosting = subscribePublishedHostingPartners(
-      (items) => setHostingPartners(items),
-      () => setHostingPartners(SEED_HOSTING_PARTNERS)
     );
 
     const unsubSettings = subscribeSiteSettings(
@@ -146,9 +119,7 @@ function KotoBatuahApp() {
     );
 
     return () => {
-      unsubPortfolio();
       unsubTestimonials();
-      unsubHosting();
       unsubSettings();
       unsubBlogs();
       unsubProcedures();
@@ -201,7 +172,7 @@ function KotoBatuahApp() {
     service: LeadServiceType,
     contextNote?: string,
     city?: string,
-    source: LeadSource = 'portfolio_cta'
+    source: LeadSource = 'homepage_form'
   ) => {
     setPrefillService(service);
     if (contextNote) setPrefillBrief(contextNote);
@@ -214,11 +185,8 @@ function KotoBatuahApp() {
     <div className="min-h-screen flex flex-col bg-[#F8F7F4] text-[#0D1117]">
       <Navbar
         lang={lang}
+        contactPhone={siteSettings.contactPhone}
         onNavigateSection={navigateHomeAndScroll}
-        onStartConsultation={() => {
-          setPrefillSource('homepage_form');
-          focusConsultationForm();
-        }}
       />
 
       <main className="flex-1">
@@ -238,46 +206,25 @@ function KotoBatuahApp() {
               lang={lang}
               onChangeLang={setLang}
               siteSettings={siteSettings}
-              onStartConsultation={() => {
+              onExplorePackages={() => navigateHomeAndScroll('paket-2027')}
+            />
+
+            <ProblemsAndSolutionsSection
+              lang={lang}
+              onExplorePackages={() => navigateHomeAndScroll('paket-2027')}
+            />
+
+            <Packages2027Section lang={lang} siteSettings={siteSettings} />
+
+            <ApproachEeatSection lang={lang} testimonials={testimonials} />
+
+            <FaqClosingSection
+              lang={lang}
+              siteSettings={siteSettings}
+              onOpenWrittenBrief={() => {
                 setPrefillSource('homepage_form');
                 focusConsultationForm();
               }}
-              onExplorePortfolio={() => navigateHomeAndScroll('portofolio')}
-            />
-
-            <PortfolioSection
-              lang={lang}
-              items={portfolio}
-              loading={portfolioLoading}
-              onConsultService={(svc, title) =>
-                handleConsultWithContext(
-                  svc,
-                  title
-                    ? lang === 'en'
-                      ? `Interested in a campaign similar to case study: ${title}`
-                      : `Tertarik kampanye serupa studi kasus: ${title}`
-                    : undefined,
-                  undefined,
-                  'portfolio_cta'
-                )
-              }
-            />
-
-            <ServicesAndHostingSection
-              lang={lang}
-              hostingPartners={hostingPartners}
-              onSelectService={(svc, note) =>
-                handleConsultWithContext(svc, note, undefined, 'homepage_form')
-              }
-            />
-
-            <TestimonialsSection lang={lang} items={testimonials} />
-
-            <SeoGeoSection
-              lang={lang}
-              onConsultGeo={(svc, note, city) =>
-                handleConsultWithContext(svc, note, city, 'homepage_form')
-              }
             />
 
             <BlogSection

@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, MessageCircle, X } from 'lucide-react';
 import { COPY } from '../i18n/translations';
 import type { Locale } from '../types/domain';
+import { buildWhatsAppUrl } from '../utils/whatsapp';
 import { KotoLogo } from './KotoLogo';
 
 interface NavbarProps {
   lang: Locale;
+  contactPhone: string;
   onNavigateSection: (sectionId: string) => void;
-  onStartConsultation: () => void;
 }
 
-export function Navbar({ lang, onNavigateSection, onStartConsultation }: NavbarProps) {
+export function Navbar({ lang, contactPhone, onNavigateSection }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const t = COPY[lang].nav;
+  const waHref = buildWhatsAppUrl(contactPhone, COPY[lang].hero.primaryWaMessage);
 
   const navLinks = [
-    { id: 'portofolio', label: t.portofolio },
-    { id: 'layanan', label: t.layanan },
-    { id: 'partner-hosting', label: t.hosting },
-    { id: 'testimoni', label: t.testimoni },
-    { id: 'seo-geo', label: t.seoGeo },
+    { id: 'masalah-solusi', label: t.masalahSolusi },
+    { id: 'paket-2027', label: t.paket },
+    { id: 'pendekatan', label: t.pendekatan },
+    { id: 'faq', label: t.faq },
     { id: 'blog', label: t.blog },
+    { id: 'konsultasi', label: t.konsultasi },
   ];
 
   const handleLinkClick = (id: string) => {
@@ -64,18 +66,17 @@ export function Navbar({ lang, onNavigateSection, onStartConsultation }: NavbarP
           ))}
         </nav>
 
-        {/* Zone 3: Single primary CTA + Mobile menu toggle */}
+        {/* Zone 3: Direct WhatsApp CTA + Mobile menu toggle */}
         <div className="flex items-center gap-3 shrink-0">
-          <button
-            type="button"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onStartConsultation();
-            }}
-            className="hidden sm:inline-flex items-center justify-center px-4 py-2 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm font-medium rounded-lg transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8]"
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm font-medium rounded-lg transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D4ED8]"
           >
-            {t.cta}
-          </button>
+            <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+            <span>{t.cta}</span>
+          </a>
 
           <button
             type="button"
@@ -109,16 +110,16 @@ export function Navbar({ lang, onNavigateSection, onStartConsultation }: NavbarP
             </a>
           ))}
           <div className="pt-2">
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onStartConsultation();
-              }}
-              className="w-full px-4 py-3 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#1D4ED8] hover:bg-[#1E40AF] text-white text-sm font-medium rounded-lg transition-colors"
             >
-              {t.cta}
-            </button>
+              <MessageCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>{t.cta}</span>
+            </a>
           </div>
         </nav>
       )}

@@ -392,3 +392,37 @@ test('project-based defaults omit fabricated physical street addresses and unver
   }
 });
 
+test('buildWhatsAppUrl formats Indonesian phone numbers and prefilled messages accurately', async () => {
+  const { formatWhatsAppNumber, buildWhatsAppUrl } = await import('./whatsapp');
+  assert.equal(formatWhatsAppNumber('+62 813-2441-2025'), '6281324412025');
+  assert.equal(formatWhatsAppNumber('0813-2441-2025'), '6281324412025');
+  assert.equal(formatWhatsAppNumber(''), '6281324412025');
+
+  const url = buildWhatsAppUrl(
+    DEFAULT_SITE_SETTINGS.contactPhone,
+    'Halo Koto Batuah, saya ingin konsultasi persiapan aset digital untuk 2027. Boleh info alur dan slot terdekatnya?'
+  );
+  assert.equal(
+    url,
+    'https://wa.me/6281324412025?text=Halo%20Koto%20Batuah%2C%20saya%20ingin%20konsultasi%20persiapan%20aset%20digital%20untuk%202027.%20Boleh%20info%20alur%20dan%20slot%20terdekatnya%3F'
+  );
+});
+
+test('2027 landing page copy preserves exact badge, packages, E-E-A-T, and FAQ in ID and EN', async () => {
+  const { COPY } = await import('../i18n/translations');
+  assert.equal(COPY.id.hero.badge, 'SIAP AKSELERASI DIGITAL 2027 • KOTO BATUAH');
+  assert.equal(COPY.id.packages2027.items.length, 3);
+  assert.equal(COPY.en.packages2027.items.length, 3);
+  assert.equal(COPY.id.faqClosing.items.length, 3);
+  assert.equal(COPY.en.faqClosing.items.length, 3);
+
+  const packageReply = generateStandardChatReply(
+    'Info paket website bisnis kilat 2027',
+    'id',
+    DEFAULT_SITE_SETTINGS
+  );
+  assert.match(packageReply, /Website Bisnis Kilat 2027/);
+  assert.match(packageReply, /Audit & Optimasi Web \+ SEO\/GEO/);
+});
+
+

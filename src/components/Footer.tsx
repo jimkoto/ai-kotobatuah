@@ -62,12 +62,12 @@ export function Footer({
           <div className="md:col-span-3 space-y-2.5 text-sm">
             <p className="font-semibold text-white mb-3">{f.navTitle}</p>
             {[
-              { id: 'portofolio', label: n.portofolio },
-              { id: 'layanan', label: n.layanan },
-              { id: 'partner-hosting', label: n.hosting },
-              { id: 'testimoni', label: n.testimoni },
-              { id: 'seo-geo', label: n.seoGeo },
+              { id: 'masalah-solusi', label: n.masalahSolusi },
+              { id: 'paket-2027', label: n.paket },
+              { id: 'pendekatan', label: n.pendekatan },
+              { id: 'faq', label: n.faq },
               { id: 'blog', label: n.blog },
+              { id: 'konsultasi', label: n.konsultasi },
             ].map((item) => (
               <div key={item.id}>
                 <a

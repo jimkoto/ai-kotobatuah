@@ -9,6 +9,25 @@ interface KnowledgeRule {
 const KNOWLEDGE_RULES: KnowledgeRule[] = [
   {
     keywords: [
+      '2027',
+      'paket',
+      'website',
+      'kilat',
+      'audit',
+      'retainer',
+      'bulanan',
+      'umkm',
+      'properti',
+      'package',
+      'express',
+    ],
+    replyId: (s) =>
+      `**3 Paket Siap Akselerasi Digital 2027 — kotobatuah.com**:\n\n1. **Website Bisnis Kilat 2027** (3–5 hari kerja): Landing page/profil responsif, struktur value & FAQ, serta tombol WhatsApp otomatis + SEO/GEO dasar.\n2. **Audit & Optimasi Web + SEO/GEO** (2–4 hari kerja): Perbaikan kecepatan, heading, ringkasan jawaban AI/GEO, dan metadata.\n3. **Retainer Perawatan & Konten Bulanan** (skema bulanan/tahunan): Pembaruan promo/halaman berkala & penyusunan draf artikel terarah.\n\nHubungi WhatsApp **${s.contactPhone}** atau klik salah satu paket di halaman utama untuk mengamankan slot terdekat.`,
+    replyEn: (s) =>
+      `**3 Core 2027 Conversion Packages — kotobatuah.com**:\n\n1. **Express Business Website 2027** (3–5 business days): Responsive landing/profile page with WhatsApp CTA & foundational SEO/GEO.\n2. **Web Audit & SEO/GEO Optimization** (2–4 business days): Speed, heading cleanup, AI/GEO readiness, and conversion CTA tuning.\n3. **Monthly Care & Content Retainer**: Ongoing page updates, content drafts, and priority technical care.\n\nReach us on WhatsApp **${s.contactPhone}** or choose a package card to reserve a slot.`,
+  },
+  {
+    keywords: [
       'billboard',
       'ooh',
       'videotron',
