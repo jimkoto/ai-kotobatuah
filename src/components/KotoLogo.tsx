@@ -9,7 +9,7 @@ export function KotoLogo({ className = 'w-8 h-8' }: KotoLogoProps) {
     >
       <span className="block w-full h-[78%] overflow-hidden">
         <img
-          src="/assets/aistudio/kotobatuah_836e973c.jpeg"
+          src="/assets/aistudio/kotobatuah_sync.jpeg"
           alt="Logo Koto Batuah"
           width={64}
           height={64}

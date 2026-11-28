@@ -105,66 +105,128 @@ export const COPY = {
       kicker: 'Tiga Paket Utama Cepat Menghasilkan',
       heading: 'Pilih langkah tercepat untuk menyiapkan aset digital bisnis Anda sebelum 2027.',
       subtitle:
-        'Setiap paket disusun ringkas agar Anda bisa langsung eksekusi tanpa birokrasi berbelit. Klik paket yang sesuai untuk langsung terhubung ke WhatsApp.',
+        'Setiap paket mencantumkan estimasi total biaya yang transparan. Anda juga dapat menambahkan sesi konsultasi online lanjutan atau tatap muka (on-site) bila proyek membutuhkan pendampingan ekstra.',
+      consultSelectorLabel: 'Opsi Pendampingan & Konsultasi:',
+      consultOptions: [
+        {
+          id: 'none' as const,
+          label: 'Standar (WA + 1x Brief Online)',
+          feeText: 'Termasuk',
+        },
+        {
+          id: 'online' as const,
+          label: 'Konsultasi Online Mendalam (60 mnt)',
+          feeText: '+Rp 250.000',
+        },
+        {
+          id: 'onsite' as const,
+          label: 'Tatap Muka / On-Site (Tangerang & Jabodetabek)',
+          feeText: '+Rp 500rb – 1jt',
+        },
+      ],
+      mockupJumpLabel: 'Buat Mockup Instan Paket 1',
       items: [
         {
-          id: 'paket-website-kilat',
+          id: 'paket-website-kilat' as const,
           code: 'Paket 1',
           badge: 'Siap Mulai Cepat',
           featured: true,
           title: 'Website Bisnis Kilat 2027',
           audience:
             'Cocok untuk UMKM, jasa lokal, agen/tim properti, praktisi, dan komunitas yang butuh alamat resmi online cepat sebelum tahun baru.',
+          priceLabel: 'Estimasi Total Biaya',
+          priceUnit: '/ proyek',
+          priceNote:
+            'Sudah termasuk struktur landing page responsif, pengaturan dasar SEO/GEO, & tombol WhatsApp otomatis.',
+          consultationAddonNote:
+            'Termasuk 1x brief online awal. Tambahan sesi online +Rp 250rb · On-Site +Rp 500rb–1jt.',
           features: [
             'Halaman profil / landing page responsif',
             'Struktur value, layanan/produk, keunggulan, FAQ, dan tombol kontak langsung',
             'Integrasi WhatsApp dengan pesan otomatis & pengaturan dasar SEO/GEO',
           ],
-          estimateLabel: 'Estimasi',
+          estimateLabel: 'Estimasi Waktu',
           estimate: 'Pengerjaan kilat 3–5 hari kerja (setelah materi/brief lengkap).',
           ctaLabel: 'Pesan Paket Website Kilat',
           waMessage:
             'Halo Koto Batuah, saya tertarik dengan Paket Website Bisnis Kilat 2027 untuk usaha/proyek saya. Mohon info detail paket, estimasi waktu, dan DP-nya.',
         },
         {
-          id: 'paket-audit-optimasi',
+          id: 'paket-audit-optimasi' as const,
           code: 'Paket 2',
           badge: 'SEO + GEO Ready',
           featured: false,
           title: 'Audit & Optimasi Web + SEO/GEO',
           audience:
             'Cocok untuk pemilik website yang ingin situsnya lebih cepat, rapi secara struktur, dan mudah dipahami mesin pencari maupun ringkasan AI.',
+          priceLabel: 'Estimasi Total Biaya',
+          priceUnit: '/ audit & eksekusi',
+          priceNote:
+            'Menyesuaikan jumlah halaman, tingkat perbaikan struktur teknis, & optimasi metadata.',
+          consultationAddonNote:
+            'Perlu diskusi teknis ekstra? Konsultasi Online +Rp 250rb/sesi · Tatap Muka On-Site +Rp 500rb–1jt/kunjungan.',
           features: [
             'Evaluasi kecepatan, struktur halaman, keterbacaan konten, dan jalur konversi (CTA)',
             'Perapihan heading, ringkasan jawaban/FAQ, dan metadata agar lebih kuat di SEO & GEO',
             'Rekomendasi prioritas perbaikan yang bisa langsung dieksekusi',
           ],
-          estimateLabel: 'Estimasi',
+          estimateLabel: 'Estimasi Waktu',
           estimate: '2–4 hari kerja.',
           ctaLabel: 'Ajukan Audit & Optimasi',
           waMessage:
             'Halo Koto Batuah, saya ingin mengajukan Audit & Optimasi Web + SEO/GEO untuk situs saya. Boleh kirimkan info langkah awalnya?',
         },
         {
-          id: 'paket-retainer-bulanan',
+          id: 'paket-retainer-bulanan' as const,
           code: 'Paket 3',
           badge: 'Perawatan Rutin',
           featured: false,
           title: 'Retainer Perawatan & Konten Bulanan',
           audience:
             'Cocok untuk bisnis atau pengelola kanal yang ingin aset web, pembaruan informasi, dan konten rutin tetap jalan tanpa harus mengurus teknis sendiri.',
+          priceLabel: 'Estimasi Total Biaya',
+          priceUnit: '/ bulan',
+          priceNote:
+            'Menyesuaikan frekuensi update promo/halaman dan kuota draf artikel terarah tiap bulan.',
+          consultationAddonNote:
+            'Review bulanan online sudah termasuk. Kunjungan On-Site (rapat/peliputan) +Rp 500rb–1jt/kunjungan.',
           features: [
             'Pembaruan halaman/promo/informasi berkala dan pengecekan kesehatan tautan/halaman',
             'Penyusunan draf artikel/konten terarah berbasis sudut pandang bisnis & kebutuhan audiens',
             'Prioritas respons pembaruan teknis sesuai kesepakatan paket',
           ],
-          estimateLabel: 'Estimasi',
+          estimateLabel: 'Estimasi Skema',
           estimate: 'Skema bulanan / kontrak tahunan.',
           ctaLabel: 'Diskusi Paket Retainer',
           waMessage:
             'Halo Koto Batuah, saya tertarik membahas Paket Retainer Perawatan & Konten Bulanan untuk kebutuhan rutin ke depan.',
         },
       ],
+    },
+    mockupBuilder: {
+      kicker: 'Alat Praktis Paket 1 · Live Preview',
+      heading: 'Simulasikan Mockup Website Bisnis Anda Secara Instan',
+      subtitle:
+        'Pilih template sesuai sektor usaha, isi formulir singkat di kiri, lalu klik tombol Generate untuk langsung melihat pratinjau tampilan desktop maupun mobile.',
+      templateLabel: '1. Pilih Template Bisnis',
+      businessNameLabel: '2. Nama Usaha / Brand *',
+      businessNamePlaceholder: 'Contoh: Zafran Coffee Roastery',
+      taglineLabel: '3. Kalimat Penawaran Utama *',
+      taglinePlaceholder: 'Jelaskan keunggulan singkat bisnis Anda...',
+      cityLabel: '4. Kota / Area Layanan *',
+      cityPlaceholder: 'Tangerang Selatan / Jabodetabek',
+      waLabel: '5. Nomor WhatsApp Usaha',
+      waPlaceholder: '+62 812-xxxx-xxxx',
+      highlightsLabel: '6. Tiga Produk / Layanan Unggulan (pisahkan dengan koma)',
+      highlightsPlaceholder: 'Produk 1, Produk 2, Layanan 3',
+      generateBtn: 'Generate Mockup Situs',
+      resetBtn: 'Muat Contoh Template',
+      previewTitle: 'Pratinjau Live Mockup Website',
+      desktopMode: 'Desktop',
+      mobileMode: 'Mobile',
+      orderWithMockupCta: 'Pesan Paket Website Kilat dengan Mockup Ini',
+      estimatedLabel: 'Estimasi Paket 1:',
+      generatedBanner: 'Mockup berhasil diperbarui sesuai data bisnis Anda.',
     },
     approach: {
       kicker: 'Bukti & Pendekatan Kerja (E-E-A-T)',
@@ -495,16 +557,41 @@ export const COPY = {
       kicker: 'Three Core Conversion Packages',
       heading: 'Pick the fastest path to get your digital assets working before 2027.',
       subtitle:
-        'Every package is structured for swift execution with direct WhatsApp coordination.',
+        'Each package shows a transparent total cost estimate. Add optional deep-dive online sessions or on-site consultation if your project requires hands-on alignment.',
+      consultSelectorLabel: 'Consultation & Guidance Mode:',
+      consultOptions: [
+        {
+          id: 'none' as const,
+          label: 'Standard (WA + 1x Initial Online Brief)',
+          feeText: 'Included',
+        },
+        {
+          id: 'online' as const,
+          label: 'Extended Online Consultation (60 mins)',
+          feeText: '+IDR 250,000',
+        },
+        {
+          id: 'onsite' as const,
+          label: 'On-Site / Face-to-Face (Tangerang & Jabodetabek)',
+          feeText: '+IDR 500k – 1M',
+        },
+      ],
+      mockupJumpLabel: 'Launch Package 1 Mockup Builder',
       items: [
         {
-          id: 'paket-website-kilat',
+          id: 'paket-website-kilat' as const,
           code: 'Package 1',
           badge: 'Fast-Track Launch',
           featured: true,
           title: 'Express Business Website 2027',
           audience:
             'Built for SMEs, local services, property agents/teams, practitioners, and communities needing an official online presence fast before the new year.',
+          priceLabel: 'Estimated Total Cost',
+          priceUnit: '/ project',
+          priceNote:
+            'Includes responsive landing page structure, foundational SEO/GEO setup, & WhatsApp routing.',
+          consultationAddonNote:
+            'Includes 1x initial brief. Extra online session +IDR 250k · On-Site +IDR 500k–1M.',
           features: [
             'Responsive company profile or landing page',
             'Clear value proposition, service/product blocks, strengths, FAQ, and direct contact buttons',
@@ -517,13 +604,19 @@ export const COPY = {
             'Hello Koto Batuah, I am interested in the Express Business Website 2027 package for my business/project. Please share package details, timeline, and deposit steps.',
         },
         {
-          id: 'paket-audit-optimasi',
+          id: 'paket-audit-optimasi' as const,
           code: 'Package 2',
           badge: 'SEO + GEO Ready',
           featured: false,
           title: 'Web Audit & SEO/GEO Optimization',
           audience:
             'Ideal for website owners seeking faster speed, cleaner structure, and stronger visibility across search engines and AI summaries.',
+          priceLabel: 'Estimated Total Cost',
+          priceUnit: '/ audit & execution',
+          priceNote:
+            'Scaled by page count, technical refactoring scope, and SEO/GEO metadata tuning.',
+          consultationAddonNote:
+            'Need deeper workshop time? Online +IDR 250k/session · On-Site visit +IDR 500k–1M.',
           features: [
             'Evaluation of page speed, layout structure, content readability, and CTA conversion paths',
             'Heading cleanup, answer/FAQ summaries, and metadata tuning for SEO & GEO clarity',
@@ -536,13 +629,19 @@ export const COPY = {
             'Hello Koto Batuah, I would like to request a Web Audit & SEO/GEO Optimization for my site. Could you share the initial steps?',
         },
         {
-          id: 'paket-retainer-bulanan',
+          id: 'paket-retainer-bulanan' as const,
           code: 'Package 3',
           badge: 'Ongoing Care',
           featured: false,
           title: 'Monthly Care & Content Retainer',
           audience:
             'Designed for businesses or channel managers wanting regular updates, content publishing, and site upkeep handled without technical hassle.',
+          priceLabel: 'Estimated Total Cost',
+          priceUnit: '/ month',
+          priceNote:
+            'Adjusted by monthly promo/page update frequency and editorial article quota.',
+          consultationAddonNote:
+            'Monthly online check-in included. On-Site visit (meetings/shoot) +IDR 500k–1M/visit.',
           features: [
             'Scheduled page/promo/information updates and routine link/page health checks',
             'Targeted article & content drafts aligned with business angles and audience questions',
@@ -555,6 +654,31 @@ export const COPY = {
             'Hello Koto Batuah, I would like to discuss the Monthly Care & Content Retainer for ongoing website and content needs.',
         },
       ],
+    },
+    mockupBuilder: {
+      kicker: 'Package 1 Instant Tool · Live Preview',
+      heading: 'Generate Your Business Website Mockup in 30 Seconds',
+      subtitle:
+        'Pick a template matching your sector, fill in the quick form on the left, and click Generate to preview desktop and mobile layouts right away.',
+      templateLabel: '1. Select Business Template',
+      businessNameLabel: '2. Business / Brand Name *',
+      businessNamePlaceholder: 'e.g. Zafran Coffee Roastery',
+      taglineLabel: '3. Core Value Proposition *',
+      taglinePlaceholder: 'Describe what makes your business stand out...',
+      cityLabel: '4. Target City / Area *',
+      cityPlaceholder: 'South Tangerang / Greater Jakarta',
+      waLabel: '5. Business WhatsApp Number',
+      waPlaceholder: '+62 812-xxxx-xxxx',
+      highlightsLabel: '6. Three Featured Offers (comma-separated)',
+      highlightsPlaceholder: 'Offer 1, Offer 2, Service 3',
+      generateBtn: 'Generate Site Mockup',
+      resetBtn: 'Load Template Preset',
+      previewTitle: 'Live Website Mockup Preview',
+      desktopMode: 'Desktop',
+      mobileMode: 'Mobile',
+      orderWithMockupCta: 'Order Express Website With This Mockup',
+      estimatedLabel: 'Package 1 Estimate:',
+      generatedBanner: 'Mockup updated with your business details.',
     },
     approach: {
       kicker: 'Proof & Working Approach (E-E-A-T)',

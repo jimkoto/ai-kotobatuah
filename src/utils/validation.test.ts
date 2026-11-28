@@ -425,4 +425,51 @@ test('2027 landing page copy preserves exact badge, packages, E-E-A-T, and FAQ i
   assert.match(packageReply, /Audit & Optimasi Web \+ SEO\/GEO/);
 });
 
+test('mockupBuilder calculates package totals with consultation add-ons and builds WA order links', async () => {
+  const {
+    calculateEstimatedTotalRange,
+    parseMockupHighlights,
+    buildMockupPreviewSlug,
+    buildMockupOrderWhatsAppUrl,
+  } = await import('./mockupBuilder');
+
+  const baseAudit = calculateEstimatedTotalRange('paket-audit-optimasi', 'none');
+  assert.equal(baseAudit.minTotal, 1_800_000);
+  assert.equal(baseAudit.maxTotal, 3_500_000);
+
+  const onlineAudit = calculateEstimatedTotalRange('paket-audit-optimasi', 'online');
+  assert.equal(onlineAudit.minTotal, 2_050_000);
+  assert.equal(onlineAudit.maxTotal, 3_750_000);
+
+  const onsiteRetainer = calculateEstimatedTotalRange('paket-retainer-bulanan', 'onsite');
+  assert.equal(onsiteRetainer.minTotal, 1_750_000);
+  assert.equal(onsiteRetainer.maxTotal, 4_500_000);
+  assert.equal(onsiteRetainer.isMonthly, true);
+
+  assert.deepEqual(
+    parseMockupHighlights('Green Beans, Roasted Beans, Jasa Roasting, Extra', ['Fallback']),
+    ['Green Beans', 'Roasted Beans', 'Jasa Roasting']
+  );
+  assert.equal(buildMockupPreviewSlug('Zafran Coffee Roastery!'), 'zafran-coffee-roastery');
+
+  const waOrder = buildMockupOrderWhatsAppUrl(
+    DEFAULT_SITE_SETTINGS.contactPhone,
+    {
+      templateId: 'umkm',
+      businessName: 'Kopi Pamulang',
+      tagline: 'Kopi segar setiap hari',
+      city: 'Tangerang Selatan',
+      businessWhatsapp: '+62 812-3456-7890',
+      highlightsText: 'Arabica, Robusta, Roasting',
+    },
+    'id',
+    'onsite'
+  );
+  assert.match(waOrder, /^https:\/\/wa\.me\/6281324412025\?text=/);
+  const decoded = decodeURIComponent(waOrder.split('?text=')[1]);
+  assert.match(decoded, /Kopi Pamulang/);
+  assert.match(decoded, /Tatap muka \/ On-site/);
+});
+
+
 
